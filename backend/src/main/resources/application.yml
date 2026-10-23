@@ -1,0 +1,87 @@
+spring:
+  application:
+    name: clientra-api
+  profiles:
+    default: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/clientra_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+    username: clientra
+    password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+        default_batch_fetch_size: 50
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 1s
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60s
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.connectiontimeout: 5000
+      mail.smtp.timeout: 5000
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+
+server:
+  port: 8080
+  error:
+    include-message: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-components: always
+  health:
+    mail:
+      enabled: false
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:}
+    access-token-ttl: 15m
+    refresh-token-ttl: 7d
+  cors:
+    allowed-origins: http://localhost:5173
+  frontend-url: http://localhost:5173
+  mail:
+    enabled: false
+    from: "Clientra CMS <no-reply@clientra.local>"
+  seed:
+    enabled: true
+  sla:
+    high-hours: 8
+    medium-hours: 24
+    low-hours: 48
