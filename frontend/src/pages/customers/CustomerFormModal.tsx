@@ -146,7 +146,7 @@ export function CustomerFormModal({ open, onClose, customer, onSaved }: { open: 
     dup?.field === field ? (
       <span className="mt-1 flex items-center gap-1 text-xs font-medium text-red-700">
         ⚠ A customer with this {field} already exists —{" "}
-        <Link to={`/customers/${dup.existingId}`} onClick={onClose} className="underline">
+        <Link to={`/customers/${dup.existingId}`} onClick={onClose} className="whitespace-nowrap underline">
           {dup.existingCode}
         </Link>
       </span>

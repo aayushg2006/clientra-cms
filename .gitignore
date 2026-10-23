@@ -25,3 +25,4 @@ frontend/.env.*
 # Local tooling
 .claude/
 backend/boot.log
+backend/verify.log

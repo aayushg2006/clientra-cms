@@ -197,10 +197,34 @@
                         <id>prepare-agent-it</id>
                         <goals><goal>prepare-agent-integration</goal></goals>
                     </execution>
+                    <!-- combine unit + integration coverage into one report -->
+                    <execution>
+                        <id>merge</id>
+                        <phase>verify</phase>
+                        <goals><goal>merge</goal></goals>
+                        <configuration>
+                            <fileSets>
+                                <fileSet>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                        <include>jacoco.exec</include>
+                                        <include>jacoco-it.exec</include>
+                                    </includes>
+                                </fileSet>
+                            </fileSets>
+                            <destFile>${project.build.directory}/jacoco-merged.exec</destFile>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>report</id>
                         <phase>verify</phase>
                         <goals><goal>report</goal></goals>
+                        <configuration>
+                            <dataFile>${project.build.directory}/jacoco-merged.exec</dataFile>
+                            <excludes>
+                                <exclude>io/clientra/config/DemoDataSeeder*</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

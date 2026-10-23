@@ -1,0 +1,15 @@
+# Integration tests run against a separate local schema (clientra_test) so demo data is never touched.
+# Credentials come from application-local.yml (tests activate the "local" and "test" profiles).
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/clientra_test?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+  flyway:
+    clean-disabled: false
+  cache:
+    type: simple
+
+app:
+  mail:
+    enabled: false
+  seed:
+    enabled: false
