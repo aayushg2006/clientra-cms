@@ -522,7 +522,7 @@ public class DemoDataSeeder implements ApplicationRunner {
             cursor = cursor.plus(Duration.ofMinutes(38));
         }
         String who = assignee != null ? assignee.getFullName() : "unassigned";
-        audit(t.getCreatedBy(), "TICKET", t.getId(), c.getId(), "CREATED", "Ticket " + t.getTicketNumber() + " created", createdAt);
+        audit(t.getCreatedBy(), "TICKET", t.getId(), c.getId(), "CREATED", "Ticket created", createdAt);
         if (assignee != null) {
             audit(null, "TICKET", t.getId(), c.getId(), "ASSIGNED", "Assigned to " + who + " (auto)", createdAt.plus(Duration.ofMinutes(3)));
         }

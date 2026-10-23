@@ -52,7 +52,7 @@ export function Sidebar() {
             to={n.to}
             className={({ isActive }) =>
               clsx(
-                "flex items-center gap-2 rounded-lg px-2.5 py-[7px] text-[13.5px] transition",
+                "flex items-center gap-2 whitespace-nowrap rounded-lg px-2.5 py-[7px] text-[13.5px] transition",
                 isActive ? "bg-white/[0.13] font-semibold text-white" : "text-white/85 hover:bg-white/[0.07] hover:text-white",
               )
             }

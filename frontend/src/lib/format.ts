@@ -83,8 +83,7 @@ export function duration(ms: number) {
   const abs = Math.abs(ms);
   const m = Math.floor(abs / 60_000);
   const h = Math.floor(m / 60);
-  const d = Math.floor(h / 24);
-  if (d >= 2) return `${d}d`;
+  if (h >= 36) return `${Math.round(h / 24)}d`;
   if (h >= 1) return m % 60 && h < 10 ? `${h}h ${m % 60}m` : `${h}h`;
   return `${m}m`;
 }
@@ -92,15 +91,15 @@ export function duration(ms: number) {
 export type SlaTone = "red" | "amber" | "green" | "gray";
 
 /**
- * SLA countdown for an unresolved ticket: red when breached or under 25% of the window left,
- * amber under 60%, otherwise green.
+ * SLA countdown for an unresolved ticket: red when breached or under 8 hours left,
+ * amber under 40% of the window left, otherwise green.
  */
 export function sla(slaDueAt: string, createdAt: string, now = Date.now()) {
   const due = new Date(slaDueAt).getTime();
   const total = Math.max(1, due - new Date(createdAt).getTime());
   const left = due - now;
   const ratio = left / total;
-  const tone: SlaTone = left <= 0 || ratio < 0.25 ? "red" : ratio < 0.6 ? "amber" : "green";
+  const tone: SlaTone = left <= 0 || left < 8 * 3_600_000 ? "red" : ratio < 0.4 ? "amber" : "green";
   const label = left <= 0 ? `${duration(left)} overdue` : `${duration(left)} left`;
   return { left, ratio: Math.max(0, Math.min(1, ratio)), tone, label };
 }
