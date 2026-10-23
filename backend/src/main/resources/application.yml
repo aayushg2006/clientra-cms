@@ -12,7 +12,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     properties:
       hibernate:
         jdbc.time_zone: UTC
@@ -76,6 +76,7 @@ app:
   cors:
     allowed-origins: http://localhost:5173
   frontend-url: http://localhost:5173
+  timezone: Asia/Kolkata
   mail:
     enabled: false
     from: "Clientra CMS <no-reply@clientra.local>"
