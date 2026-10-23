@@ -4,7 +4,7 @@ spring:
   profiles:
     default: local
   datasource:
-    url: jdbc:mysql://localhost:3306/clientra_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/clientra_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
     username: clientra
     password: ${DB_PASSWORD:}
     hikari:
@@ -47,7 +47,7 @@ spring:
       max-file-size: 5MB
 
 server:
-  port: 8080
+  port: 8081
   error:
     include-message: always
 

@@ -21,3 +21,7 @@ frontend/.env.*
 .env.*
 !.env.example
 *.log
+
+# Local tooling
+.claude/
+backend/boot.log

@@ -3,7 +3,7 @@
 
 spring:
   datasource:
-    username: clientra
+    username: root
     password: CHANGE_ME_MYSQL_PASSWORD
   mail:
     # Gmail address and a 16-character Gmail App Password (see README > Email setup)
