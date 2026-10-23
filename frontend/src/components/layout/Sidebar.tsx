@@ -38,7 +38,8 @@ export function Sidebar() {
   });
 
   return (
-    <aside className="sticky top-0 flex h-screen w-[196px] shrink-0 flex-col bg-teal-900 px-3 py-4 text-white">
+    <div className="w-[196px] shrink-0 bg-teal-900">
+    <aside className="sticky top-0 flex h-screen flex-col px-3 py-4 text-white">
       <div className="mb-6 flex items-center gap-2.5 px-1.5">
         <span className="flex h-[30px] w-[30px] items-center justify-center rounded-lg bg-white text-[15px] font-extrabold text-teal-700">C</span>
         <span className="text-[17px] font-bold tracking-tight">Clientra CMS</span>
@@ -84,5 +85,6 @@ export function Sidebar() {
         </button>
       </div>
     </aside>
+    </div>
   );
 }

@@ -57,6 +57,9 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
             """)
     List<Object[]> paidStatsByCustomer();
 
+    @Query("select count(o), max(o.orderDate) from Order o where o.customer.id = :customerId and o.paymentStatus = 'PAID'")
+    List<Object[]> paidStatsForCustomer(Long customerId);
+
     @Query("select count(distinct o.customer.id) from Order o where o.paymentStatus = 'PAID'")
     long countCustomersWithPaidOrder();
 

@@ -108,10 +108,12 @@ export interface TimelineEvent {
   kind: "INTERACTION" | "ORDER" | "TICKET" | "ACTIVITY";
   icon: string;
   title: string;
-  subtitle?: string | null;
+  actor: string;
+  at: string;
   body?: string | null;
   badges: { label: string; tone: string }[];
-  at: string;
+  followUpAt?: string | null;
+  slaDueAt?: string | null;
   link?: string | null;
 }
 
@@ -128,6 +130,7 @@ export interface Customer360 extends CustomerSummary {
   recentTickets: TicketSummary[];
   interactions: Interaction[];
   timeline: TimelineEvent[];
+  lastContactAt?: string | null;
 }
 
 export interface ChurnRisk {
@@ -248,4 +251,36 @@ export interface NotificationItem {
   link?: string | null;
   read: boolean;
   createdAt: string;
+}
+
+export interface CustomerStats {
+  total: number;
+  leads: number;
+  active: number;
+  inactive: number;
+  churned: number;
+}
+
+export interface DuplicateCheck {
+  duplicate: boolean;
+  field?: "email" | "phone";
+  existingId?: number;
+  existingCode?: string;
+  existingName?: string;
+}
+
+export interface CustomerLookup {
+  id: number;
+  name: string;
+  customerCode: string;
+  companyName?: string | null;
+  email: string;
+  status: CustomerStatus;
+}
+
+export interface ImportResult {
+  totalRows: number;
+  imported: number;
+  skipped: number;
+  errors: { row: number; email?: string | null; message: string }[];
 }

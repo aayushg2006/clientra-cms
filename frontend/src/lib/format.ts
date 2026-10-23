@@ -39,12 +39,14 @@ export function relativeDay(iso?: string | null) {
   return shortDate(iso);
 }
 
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 /** 12 Oct (adds the year when it's not the current year) */
 export function shortDate(iso?: string | null) {
   if (!iso) return "—";
   const d = new Date(iso);
-  const sameYear = d.getFullYear() === new Date().getFullYear();
-  return d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", ...(sameYear ? {} : { year: "numeric" }) });
+  const base = `${String(d.getDate()).padStart(2, "0")} ${MONTHS[d.getMonth()]}`;
+  return d.getFullYear() === new Date().getFullYear() ? base : `${base} ${d.getFullYear()}`;
 }
 
 /** 28 Sep, 11:02 */
@@ -72,7 +74,8 @@ export function friendlyDateTime(iso?: string | null) {
 /** Mar 2024 */
 export function monthYear(iso?: string | null) {
   if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  const d = new Date(iso);
+  return `${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 /** "5h 42m", "2d", "25m" */
