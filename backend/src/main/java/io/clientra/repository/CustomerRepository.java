@@ -40,4 +40,14 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>, JpaSp
 
     @Query("select c.owner.id, count(c) from Customer c where c.deletedAt is null and c.owner is not null group by c.owner.id")
     List<Object[]> countByOwner();
+
+    @Query("select c.createdAt from Customer c where c.deletedAt is null and c.createdAt >= :from")
+    List<Instant> findCreatedSince(Instant from);
+
+    @EntityGraph(attributePaths = "owner")
+    @Query("""
+            select c from Customer c where c.deletedAt is null and c.status in ('ACTIVE', 'INACTIVE')
+            and c.churnScore is not null order by c.churnScore desc, c.lifetimeValue desc
+            """)
+    List<Customer> findAtRisk(org.springframework.data.domain.Pageable pageable);
 }

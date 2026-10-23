@@ -17,6 +17,13 @@ public interface ActivityLogRepository extends JpaRepository<ActivityLog, Long>,
     @EntityGraph(attributePaths = "user")
     List<ActivityLog> findByEntityTypeAndEntityIdOrderByCreatedAtAsc(String entityType, Long entityId);
 
+    /** Lead -> Active conversions recorded by the status-change audit entries. */
+    @org.springframework.data.jpa.repository.Query("""
+            select count(distinct a.entityId) from ActivityLog a where a.entityType = 'CUSTOMER' and a.action = 'STATUS_CHANGED'
+            and a.summary like 'Status changed from Lead to Active%' and a.createdAt >= :from and a.createdAt < :to
+            """)
+    long countLeadConversions(java.time.Instant from, java.time.Instant to);
+
     @Override
     @EntityGraph(attributePaths = "user")
     Page<ActivityLog> findAll(org.springframework.data.jpa.domain.Specification<ActivityLog> spec, Pageable pageable);

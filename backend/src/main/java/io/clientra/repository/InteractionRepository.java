@@ -55,5 +55,9 @@ public interface InteractionRepository extends JpaRepository<Interaction, Long>,
     @Query("select i.user.id, count(i) from Interaction i where i.interactionAt >= :from group by i.user.id")
     List<Object[]> countByUserSince(Instant from);
 
+    /** customerId -> number of interactions, for the lifecycle funnel. */
+    @Query("select i.customer.id, count(i) from Interaction i where i.customer.deletedAt is null group by i.customer.id")
+    List<Object[]> countPerCustomer();
+
     long countByCustomerIdAndType(Long customerId, io.clientra.entity.enums.InteractionType type);
 }

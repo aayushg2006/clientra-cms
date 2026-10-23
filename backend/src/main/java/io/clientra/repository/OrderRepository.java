@@ -76,6 +76,12 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
             """)
     List<Object[]> paidStatsByUserSince(Instant from);
 
+    @Query("select distinct o.customer.id from Order o where o.paymentStatus = 'PAID' and o.paidAt >= :from and o.paidAt < :to")
+    List<Long> customersWithPaidOrderBetween(Instant from, Instant to);
+
+    @Query("select distinct o.customer.id from Order o")
+    List<Long> customersWithAnyOrder();
+
     @Query("select max(o.id) from Order o")
     Long findMaxId();
 }
